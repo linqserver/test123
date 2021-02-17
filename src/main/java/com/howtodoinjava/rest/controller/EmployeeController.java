@@ -28,19 +28,30 @@ public class EmployeeController
     @Value("${serverIp}")
     private String serverIp;
 
+    @Value("${username}")
+    private String username;
+
+    @Value("${password}")
+    private String password;
+
     @GetMapping(path="/anu", produces = "application/json")
     public void check ()
     {
 
-        logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" +keyspace);
-        logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" +serverIp);
+        logger.info("Key Space Name = " +keyspace);
+        logger.info("Server Ip = " +serverIp);
+        logger.info("User Name = " +username);
+        logger.info("Password = " +password);
 
 
         Cluster cluster = Cluster.builder()
-          .addContactPoints(serverIp)
+          .addContactPoints(serverIp).withCredentials(username, password)
           .build();
 
         Session session = cluster.connect(keyspace);
+
+        logger.info("End point = " +session);
+
 
     }
 
