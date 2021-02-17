@@ -1,5 +1,7 @@
 package com.howtodoinjava.rest.controller;
 
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import lombok.extern.log4j.Log4j2;
 import com.datastax.driver.core.Cluster;
@@ -50,7 +52,13 @@ public class EmployeeController
 
         Session session = cluster.connect(keyspace);
 
-        logger.info("End point = " +session);
+        logger.info("Session = " +session);
+        String cqlStatementC = "SELECT name FROM test_keyspace.test_table WHERE category = 'test' AND points = 5";
+        ResultSet rs = session.execute(cqlStatementC);
+        Row row = rs.one();
+        logger.info("Row " +row);
+        logger.info("Row " +row.toString());
+
 
 
     }
